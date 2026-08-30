@@ -58,3 +58,8 @@
   --ion-color-contrast: #ffffff;
   --ion-color-contrast-rgb: 255, 255, 255;
 }
+
+/* CSS trick to turn standard light maps into dark mode maps without an API key */
+.map-tiles-dark {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}

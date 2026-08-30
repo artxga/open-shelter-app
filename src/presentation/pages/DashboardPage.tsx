@@ -9,6 +9,7 @@ import { useAppStore } from '../../application/store/useAppStore';
 import { PhotoCapture } from '../components/PhotoCapture';
 import { IncidentFAB } from '../components/IncidentFAB';
 import { AppHeader } from '../components/AppHeader';
+import { FeedingMap } from '../components/FeedingMap';
 import { FoodType, FeedingPoint } from '../../domain/models/FeedingPoint';
 
 export const DashboardPage: React.FC = () => {
@@ -55,13 +56,12 @@ export const DashboardPage: React.FC = () => {
       <AppHeader title="Check-in Rondas" />
       <IonContent className="ion-padding">
         
-        {/* MAP PLACEHOLDER */}
-        <div className="w-full h-48 rounded-3xl mb-6 flex flex-col items-center justify-center relative overflow-hidden glass-panel border-t border-white/20 shadow-lg group">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-900/40 via-transparent to-slate-900/80 opacity-50"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMGg4djhIMHoiIGZpbGw9Im5vbmUiLz4KPC9zdmc+')] opacity-20 mix-blend-overlay"></div>
-          <IonIcon icon={mapOutline} className="text-4xl text-amber-500/80 mb-2 relative z-10 group-hover:scale-110 transition-transform duration-500" />
-          <span className="text-slate-300 font-semibold relative z-10 tracking-wide text-sm">Mapa interactivo (Próximamente)</span>
-        </div>
+        {/* INTERACTIVE MAP */}
+        <FeedingMap 
+          points={feedingPoints} 
+          selectedPointId={selectedPointId} 
+          onPointSelect={setSelectedPointId} 
+        />
 
         {isLoadingPoints ? (
           <div className="flex justify-center p-8"><IonSpinner name="dots" /></div>

@@ -2,10 +2,10 @@ import { FeedingPoint, FeedingRecord } from '../../domain/models/FeedingPoint';
 import { IFeedingRepository } from '../../domain/repositories/IFeedingRepository';
 
 const MOCK_POINTS: FeedingPoint[] = [
-  { id: '1', name: 'Plato Principal Anfiteatro', sector: 'Anfiteatro' },
-  { id: '2', name: 'Escondite Virgen', sector: 'Virgen Milagrosa' },
-  { id: '3', name: 'Juegos Norte', sector: 'Juegos' },
-  { id: '4', name: 'Óvalo Central', sector: 'Óvalo' },
+  { id: '1', name: 'Plato Principal Anfiteatro', sector: 'Anfiteatro', location: { lat: -12.1211, lng: -77.0302 } },
+  { id: '2', name: 'Escondite Virgen', sector: 'Virgen Milagrosa', location: { lat: -12.1218, lng: -77.0298 } },
+  { id: '3', name: 'Juegos Norte', sector: 'Juegos', location: { lat: -12.1205, lng: -77.0308 } },
+  { id: '4', name: 'Óvalo Central', sector: 'Óvalo', location: { lat: -12.1220, lng: -77.0305 } },
 ];
 
 export class MockFeedingRepository implements IFeedingRepository {
