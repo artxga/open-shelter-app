@@ -37,13 +37,49 @@ import '@ionic/react/css/palettes/dark.class.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import { LoginPage } from './presentation/pages/LoginPage';
 import { useAppStore } from './application/store/useAppStore';
 import { useEffect } from 'react';
 
 setupIonicReact();
 
+const ProtectedTabs: React.FC = () => {
+  return (
+    <IonTabs>
+      <IonRouterOutlet>
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      </IonRouterOutlet>
+
+      <IonTabBar 
+        slot="bottom" 
+        className="mx-6 mb-6 rounded-full border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] h-16 absolute bottom-0 left-0 right-0 overflow-hidden"
+        style={{ '--border': 'none', '--background': 'transparent' }}
+      >
+        <IonTabButton tab="dashboard" href="/dashboard" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
+          <IonIcon icon={mapOutline} className="text-xl mb-1" />
+          <IonLabel className="font-medium text-xs">Rondas</IonLabel>
+        </IonTabButton>
+        
+        <IonTabButton tab="history" href="/history" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
+          <IonIcon icon={timeOutline} className="text-xl mb-1" />
+          <IonLabel className="font-medium text-xs">Historial</IonLabel>
+        </IonTabButton>
+        
+        <IonTabButton tab="settings" href="/settings" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
+          <IonIcon icon={settingsOutline} className="text-xl mb-1" />
+          <IonLabel className="font-medium text-xs">Ajustes</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
+  );
+};
+
 const App: React.FC = () => {
   const isDarkMode = useAppStore((state: any) => state.isDarkMode);
+  const isAuthenticated = useAppStore((state: any) => state.isAuthenticated);
 
   useEffect(() => {
     // Toggle dark mode class on HTML element
@@ -58,38 +94,14 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-    <IonReactRouter>
-      <IonTabs>
+      <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/history" element={<HistoryPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/dashboard" replace />} />
+          
+          <Route path="*" element={isAuthenticated ? <ProtectedTabs /> : <Navigate to="/login" replace />} />
         </IonRouterOutlet>
-
-        <IonTabBar 
-          slot="bottom" 
-          className="mx-6 mb-6 rounded-full border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] h-16 absolute bottom-0 left-0 right-0 overflow-hidden"
-          style={{ '--border': 'none', '--background': 'transparent' }}
-        >
-          <IonTabButton tab="dashboard" href="/dashboard" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
-            <IonIcon icon={mapOutline} className="text-xl mb-1" />
-            <IonLabel className="font-medium text-xs">Rondas</IonLabel>
-          </IonTabButton>
-          
-          <IonTabButton tab="history" href="/history" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
-            <IonIcon icon={timeOutline} className="text-xl mb-1" />
-            <IonLabel className="font-medium text-xs">Historial</IonLabel>
-          </IonTabButton>
-          
-          <IonTabButton tab="settings" href="/settings" className="bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition-colors active:scale-95 text-slate-500 dark:text-slate-400">
-            <IonIcon icon={settingsOutline} className="text-xl mb-1" />
-            <IonLabel className="font-medium text-xs">Ajustes</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
+      </IonReactRouter>
+    </IonApp>
   );
 };
 

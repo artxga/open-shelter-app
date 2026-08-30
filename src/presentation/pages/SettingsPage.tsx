@@ -70,6 +70,10 @@ export const SettingsPage: React.FC = () => {
             fill="clear"
             color="danger" 
             className="h-14 font-bold text-lg mt-8"
+            onClick={() => {
+              const logout = useAppStore.getState().logout;
+              logout();
+            }}
           >
             <IonIcon slot="start" icon={logOutOutline} />
             CERRAR SESIÓN

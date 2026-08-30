@@ -24,6 +24,11 @@ interface AppState {
   // Preferences State
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+
+  // Authentication State
+  isAuthenticated: boolean;
+  login: () => void;
+  logout: () => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -80,5 +85,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   isDarkMode: true,
-  toggleDarkMode: () => set((state) => ({ isDarkMode: !state.isDarkMode }))
+  toggleDarkMode: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
+
+  isAuthenticated: false,
+  login: () => set({ isAuthenticated: true }),
+  logout: () => set({ isAuthenticated: false })
 }));
