@@ -32,15 +32,32 @@ import '@ionic/react/css/display.css';
 /**
  * Ionic Dark Mode
  */
-import '@ionic/react/css/palettes/dark.always.css';
+import '@ionic/react/css/palettes/dark.class.css';
 
 /* Theme variables */
 import './theme/variables.css';
 
+import { useAppStore } from './application/store/useAppStore';
+import { useEffect } from 'react';
+
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
+const App: React.FC = () => {
+  const isDarkMode = useAppStore((state: any) => state.isDarkMode);
+
+  useEffect(() => {
+    // Toggle dark mode class on HTML element
+    if (isDarkMode) {
+      document.documentElement.classList.add('ion-palette-dark');
+      document.documentElement.classList.add('dark'); // For Tailwind
+    } else {
+      document.documentElement.classList.remove('ion-palette-dark');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  return (
+    <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -73,6 +90,7 @@ const App: React.FC = () => (
       </IonTabs>
     </IonReactRouter>
   </IonApp>
-);
+  );
+};
 
 export default App;

@@ -20,6 +20,10 @@ interface AppState {
   isReportingIncident: boolean;
   loadIncidents: () => Promise<void>;
   reportIncident: (incident: Omit<Incident, 'id' | 'reportedAt' | 'status'>) => Promise<void>;
+
+  // Preferences State
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -73,5 +77,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({ isReportingIncident: false });
       throw error;
     }
-  }
+  },
+
+  isDarkMode: true,
+  toggleDarkMode: () => set((state) => ({ isDarkMode: !state.isDarkMode }))
 }));

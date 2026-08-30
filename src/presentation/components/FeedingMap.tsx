@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { FeedingPoint } from '../../domain/models/FeedingPoint';
@@ -25,29 +25,23 @@ interface FeedingMapProps {
   onPointSelect?: (id: string) => void;
 }
 
-// Component to handle map center changes and popups
-const MapEffect: React.FC<{ points: FeedingPoint[], selectedId?: string, markerRefs: React.MutableRefObject<{[key: string]: L.Marker}> }> = ({ points, selectedId, markerRefs }) => {
+// Component to handle map center changes
+const MapEffect: React.FC<{ points: FeedingPoint[], selectedId?: string }> = ({ points, selectedId }) => {
   const map = useMap();
   useEffect(() => {
     if (selectedId) {
       const point = points.find(p => p.id === selectedId);
       if (point?.location) {
-        map.flyTo([point.location.lat, point.location.lng], 18, { animate: true, duration: 1 });
-        // Open the popup for the selected marker
-        const marker = markerRefs.current[selectedId];
-        if (marker) {
-          setTimeout(() => marker.openPopup(), 200); // slight delay for smooth flying
-        }
+        map.flyTo([point.location.lat, point.location.lng], 18, { animate: true });
       }
     }
-  }, [selectedId, points, map, markerRefs]);
+  }, [selectedId, points, map]);
   return null;
 };
 
 export const FeedingMap: React.FC<FeedingMapProps> = ({ points, selectedPointId, onPointSelect }) => {
   const centerLat = -12.1215; // Parque Kennedy, Miraflores
   const centerLng = -77.0305;
-  const markerRefs = useRef<{[key: string]: L.Marker}>({});
 
   return (
     <div className="w-full h-48 rounded-3xl mb-6 overflow-hidden glass-panel border border-white/20 shadow-lg relative z-0">
@@ -70,9 +64,6 @@ export const FeedingMap: React.FC<FeedingMapProps> = ({ points, selectedPointId,
             key={point.id} 
             position={[point.location.lat, point.location.lng]}
             icon={catIcon}
-            ref={(ref) => {
-              if (ref) markerRefs.current[point.id] = ref;
-            }}
             eventHandlers={{
               click: () => onPointSelect && onPointSelect(point.id)
             }}
@@ -85,7 +76,7 @@ export const FeedingMap: React.FC<FeedingMapProps> = ({ points, selectedPointId,
           </Marker>
         ) : null)}
 
-        <MapEffect points={points} selectedId={selectedPointId} markerRefs={markerRefs} />
+        <MapEffect points={points} selectedId={selectedPointId} />
       </MapContainer>
       <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] z-10 rounded-3xl"></div>
     </div>
