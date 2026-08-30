@@ -1,35 +1,31 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Midnight Slate Theme for Ionic */
   --ion-font-family: 'Outfit', sans-serif;
   
-  --ion-background-color: #0b0f19;
-  --ion-background-color-rgb: 11,15,25;
+  /* LIGHT MODE (Default) */
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248,250,252;
 
-  --ion-text-color: #f1f5f9;
-  --ion-text-color-rgb: 241,245,249;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15,23,42;
 
-  --ion-color-step-50: #101623;
-  --ion-color-step-100: #151d2d;
-  --ion-color-step-150: #1a2438;
-  --ion-color-step-200: #1f2b42;
-  --ion-color-step-250: #24324c;
-  --ion-color-step-300: #293857;
-  --ion-color-step-350: #2e3f61;
-  --ion-color-step-400: #33466b;
-  --ion-color-step-450: #384d76;
-  --ion-color-step-500: #3d5480;
+  --ion-color-step-50: #f1f5f9;
+  --ion-color-step-100: #e2e8f0;
+  --ion-color-step-150: #cbd5e1;
+  --ion-color-step-200: #94a3b8;
+  --ion-color-step-300: #64748b;
 
-  /* Primary color: Neon Glowing Amber */
+  /* Primary color: Amber */
   --ion-color-primary: #f59e0b;
   --ion-color-primary-rgb: 245,158,11;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
   --ion-color-primary-shade: #d97706;
   --ion-color-primary-tint: #fbbf24;
 
-  /* Danger color: Glowing Crimson */
+  /* Danger color: Crimson */
   --ion-color-danger: #ef4444;
   --ion-color-danger-rgb: 239,68,68;
   --ion-color-danger-contrast: #ffffff;
@@ -38,28 +34,72 @@
   --ion-color-danger-tint: #f87171;
 }
 
+/* DARK MODE (Midnight Slate) */
+.ion-palette-dark {
+  --ion-background-color: #0b0f19;
+  --ion-background-color-rgb: 11,15,25;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+
+  --ion-color-step-50: #101623;
+  --ion-color-step-100: #151d2d;
+  --ion-color-step-150: #1a2438;
+  --ion-color-step-200: #1f2b42;
+  --ion-color-step-250: #24324c;
+  --ion-color-step-300: #293857;
+
+  --ion-color-primary: #f59e0b;
+  --ion-color-primary-rgb: 245,158,11;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0,0,0;
+  --ion-color-primary-shade: #d97706;
+  --ion-color-primary-tint: #fbbf24;
+}
+
 @theme {
   --color-primary: var(--ion-color-primary);
   --color-primary-contrast: var(--ion-color-primary-contrast);
   --color-danger: var(--ion-color-danger);
 }
 
-/* Custom global styles for glassmorphism utilities not natively in tailwind */
+/* Custom global styles for glassmorphism utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass-panel {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .ion-color-glass {
-  --ion-color-base: rgba(255, 255, 255, 0.05);
+  --ion-color-base: rgba(0, 0, 0, 0.05);
+  --ion-color-base-rgb: 0, 0, 0;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+}
+
+.dark .ion-color-glass {
+  --ion-color-base: rgba(255, 255, 255, 0.08);
   --ion-color-base-rgb: 255, 255, 255;
   --ion-color-contrast: #ffffff;
   --ion-color-contrast-rgb: 255, 255, 255;
 }
 
+/* Modal and bottom sheets */
+.glass-modal {
+  --background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+}
+.dark .glass-modal {
+  --background: rgba(11, 15, 25, 0.9);
+}
+
 /* CSS trick to turn standard light maps into dark mode maps without an API key */
-.map-tiles-dark {
+.dark .map-tiles-dark {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }

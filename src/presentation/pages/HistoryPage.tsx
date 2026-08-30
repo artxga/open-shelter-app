@@ -55,17 +55,17 @@ export const HistoryPage: React.FC = () => {
           ) : (
             historyItems.map(item => (
               <div key={item.id} className="glass-panel rounded-3xl p-4 shadow-lg flex items-start gap-4">
-                <div className={`p-3 rounded-full mt-1 ${item.type === 'incident' ? 'bg-red-500/20 text-red-500' : 'bg-amber-500/20 text-amber-500'}`}>
+                <div className={`p-3 rounded-full mt-1 ${item.type === 'incident' ? 'bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-500' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-500'}`}>
                   <IonIcon icon={item.type === 'incident' ? warningOutline : checkmarkCircleOutline} className="text-2xl" />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
-                    <h3 className="font-bold text-slate-200 m-0 text-lg leading-tight">{item.title}</h3>
-                    <span className="text-xs text-slate-500 font-medium whitespace-nowrap ml-2">
+                    <h3 className="font-bold text-slate-900 dark:text-slate-200 m-0 text-lg leading-tight">{item.title}</h3>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap ml-2">
                       {item.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                     </span>
                   </div>
-                  <p className="text-slate-400 text-sm mt-1 mb-2 leading-snug">{item.subtitle}</p>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm mt-1 mb-2 leading-snug">{item.subtitle}</p>
                   
                   {item.type === 'incident' && (
                     <IonBadge color={item.status === 'Resuelto' ? 'success' : 'warning'} className="px-2 py-1 rounded-md">

@@ -11,12 +11,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Custom amber icon for selected/premium feel
+// Custom amber icon for unselected points
 const catIcon = new L.Icon({
   iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2Y1OWUwYiI+PHBhdGggZD0iTTEyIDJDOC4xMyAyIDUgNS4xMyA1IDljMCA1LjI1IDcgMTMgNyAxM3M3LTcuNzUgNy0xM2MwLTMuODctMy4xMy03LTctN3ptMCA5LjVjLTEuMzggMC0yLjUtMS4xMi0yLjUtMi41czEuMTItMi41IDIuNS0yLjUgMi41IDEuMTIgMi41IDIuNS0xLjEyIDIuNS0yLjUgMi41eiIvPjwvc3ZnPg==',
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
+});
+
+// Custom red and larger icon for the selected point
+const selectedCatIcon = new L.Icon({
+  iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2VmNDQ0NCI+PHBhdGggZD0iTTEyIDJDOC4xMyAyIDUgNS4xMyA1IDljMCA1LjI1IDcgMTMgNyAxM3M3LTcuNzUgNy0xM2MwLTMuODctMy4xMy03LTctN3ptMCA5LjVjLTEuMzggMC0yLjUtMS4xMi0yLjUtMi41czEuMTItMi41IDIuNS0yLjUgMi41IDEuMTIgMi41IDIuNS0xLjEyIDIuNS0yLjUgMi41eiIvPjwvc3ZnPg==',
+  iconSize: [44, 44],
+  iconAnchor: [22, 44],
+  popupAnchor: [0, -44],
 });
 
 interface FeedingMapProps {
@@ -32,7 +40,12 @@ const MapEffect: React.FC<{ points: FeedingPoint[], selectedId?: string }> = ({ 
     if (selectedId) {
       const point = points.find(p => p.id === selectedId);
       if (point?.location) {
-        map.flyTo([point.location.lat, point.location.lng], 18, { animate: true });
+        // Usar setView con un pequeño retraso suele ser más estable en React-Leaflet
+        // que flyTo para evitar colisiones con el ciclo de renderizado.
+        setTimeout(() => {
+          map.invalidateSize();
+          map.setView([point.location!.lat, point.location!.lng], 18, { animate: true });
+        }, 150);
       }
     }
   }, [selectedId, points, map]);
@@ -63,7 +76,8 @@ export const FeedingMap: React.FC<FeedingMapProps> = ({ points, selectedPointId,
           <Marker 
             key={point.id} 
             position={[point.location.lat, point.location.lng]}
-            icon={catIcon}
+            icon={point.id === selectedPointId ? selectedCatIcon : catIcon}
+            zIndexOffset={point.id === selectedPointId ? 1000 : 0}
             eventHandlers={{
               click: () => onPointSelect && onPointSelect(point.id)
             }}

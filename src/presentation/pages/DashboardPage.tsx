@@ -70,13 +70,13 @@ export const DashboardPage: React.FC = () => {
             
             <div className="glass-panel rounded-3xl p-1 shadow-lg">
               <IonItem className="rounded-2xl" color="glass" lines="none" style={{ '--background': 'transparent' }}>
-                <IonLabel position="stacked" className="font-semibold text-slate-400 mb-2 tracking-wide uppercase text-xs">Punto de Alimentación</IonLabel>
+                <IonLabel position="stacked" className="font-semibold text-slate-600 dark:text-slate-300 mb-2 tracking-wide uppercase text-xs">Punto de Alimentación</IonLabel>
                 <IonSelect 
                   value={selectedPointId} 
                   onIonChange={e => setSelectedPointId(e.detail.value)}
                   placeholder="Seleccionar punto"
                   interface="action-sheet"
-                  className="text-lg font-bold text-white w-full max-w-full"
+                  className="text-lg font-bold text-slate-900 dark:text-white w-full max-w-full"
                 >
                   {feedingPoints.map((point: FeedingPoint) => (
                     <IonSelectOption key={point.id} value={point.id}>
@@ -89,7 +89,7 @@ export const DashboardPage: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="glass-panel rounded-3xl p-4 flex flex-col items-center justify-center gap-3 shadow-lg active:scale-95 transition-transform" onClick={() => setWaterRefilled(!waterRefilled)}>
-                <IonLabel className="text-sm font-semibold text-slate-300 text-center">¿Agua<br/>Renovada?</IonLabel>
+                <IonLabel className="text-sm font-semibold text-slate-700 dark:text-slate-200 text-center">¿Agua<br/>Renovada?</IonLabel>
                 <IonToggle 
                   checked={waterRefilled} 
                   onIonChange={e => { e.stopPropagation(); setWaterRefilled(e.detail.checked); }} 
@@ -99,7 +99,7 @@ export const DashboardPage: React.FC = () => {
               </div>
 
               <div className="glass-panel rounded-3xl p-4 flex flex-col items-center justify-center gap-3 shadow-lg active:scale-95 transition-transform" onClick={() => setFoodRefilled(!foodRefilled)}>
-                <IonLabel className="text-sm font-semibold text-slate-300 text-center">¿Comida<br/>Renovada?</IonLabel>
+                <IonLabel className="text-sm font-semibold text-slate-700 dark:text-slate-200 text-center">¿Comida<br/>Renovada?</IonLabel>
                 <IonToggle 
                   checked={foodRefilled} 
                   onIonChange={e => { e.stopPropagation(); setFoodRefilled(e.detail.checked); }} 
@@ -112,13 +112,13 @@ export const DashboardPage: React.FC = () => {
             {foodRefilled && (
               <div className="glass-panel rounded-3xl p-1 shadow-lg animate-in fade-in slide-in-from-top-4 duration-300">
                 <IonItem className="rounded-2xl" color="glass" lines="none" style={{ '--background': 'transparent' }}>
-                  <IonLabel position="stacked" className="font-semibold text-slate-400 mb-2 tracking-wide uppercase text-xs">Tipo de Comida</IonLabel>
+                  <IonLabel position="stacked" className="font-semibold text-slate-600 dark:text-slate-300 mb-2 tracking-wide uppercase text-xs">Tipo de Comida</IonLabel>
                   <IonSelect 
                     multiple={true} 
                     value={foodTypes} 
                     onIonChange={e => setFoodTypes(e.detail.value)}
                     interface="alert"
-                    className="text-lg font-bold text-white w-full max-w-full"
+                    className="text-lg font-bold text-slate-900 dark:text-white w-full max-w-full"
                     placeholder="Seleccionar..."
                   >
                     <IonSelectOption value="Seco">Alimento Seco</IonSelectOption>

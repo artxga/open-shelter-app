@@ -42,9 +42,9 @@ export const IncidentBottomSheet: React.FC<IncidentBottomSheetProps> = ({ isOpen
   return (
     <>
       <IonModal isOpen={isOpen} initialBreakpoint={0.75} breakpoints={[0, 0.75, 1]} onDidDismiss={onClose} className="glass-modal">
-        <IonContent style={{ '--background': '#0b0f19' }}>
-          <div className="sticky top-0 z-20 px-4 py-6 bg-[#0b0f19]/90 backdrop-blur-md border-b border-white/10 flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-extrabold text-red-500 flex items-center gap-2 m-0 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
+        <IonContent style={{ '--background': 'transparent' }} className="bg-slate-50 dark:bg-[#0b0f19]">
+          <div className="sticky top-0 z-20 px-4 py-6 bg-white/90 dark:bg-[#0b0f19]/90 backdrop-blur-md border-b border-black/5 dark:border-white/10 flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-extrabold text-red-600 dark:text-red-500 flex items-center gap-2 m-0 drop-shadow-[0_0_8px_rgba(239,68,68,0.3)] dark:drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
               <IonIcon icon={warningOutline} /> Reportar Incidencia
             </h2>
             <IonButton fill="clear" color="medium" onClick={onClose}>
@@ -55,12 +55,12 @@ export const IncidentBottomSheet: React.FC<IncidentBottomSheetProps> = ({ isOpen
           <div className="px-4 space-y-6 pb-12">
             <div className="glass-panel rounded-3xl p-1 shadow-lg">
               <IonItem className="rounded-2xl" color="glass" lines="none" style={{ '--background': 'transparent' }}>
-                <IonLabel position="stacked" className="font-semibold text-slate-400 mb-2 tracking-wide uppercase text-xs">Tipo de Incidencia</IonLabel>
+                <IonLabel position="stacked" className="font-semibold text-slate-600 dark:text-slate-400 mb-2 tracking-wide uppercase text-xs">Tipo de Incidencia</IonLabel>
                 <IonSelect 
                   value={type} 
                   onIonChange={e => setType(e.detail.value)} 
                   interface="action-sheet"
-                  className="text-lg font-bold text-white w-full max-w-full"
+                  className="text-lg font-bold text-slate-900 dark:text-white w-full max-w-full"
                 >
                   <IonSelectOption value="Nuevo Abandono">Nuevo Abandono (camada/no censado)</IonSelectOption>
                   <IonSelectOption value="Emergencia Médica">Emergencia Médica</IonSelectOption>
@@ -75,13 +75,13 @@ export const IncidentBottomSheet: React.FC<IncidentBottomSheetProps> = ({ isOpen
 
             <div className="glass-panel rounded-3xl p-1 shadow-lg">
               <IonItem className="rounded-2xl" color="glass" lines="none" style={{ '--background': 'transparent' }}>
-                <IonLabel position="stacked" className="font-semibold text-slate-400 mb-2 tracking-wide uppercase text-xs">Notas Adicionales</IonLabel>
+                <IonLabel position="stacked" className="font-semibold text-slate-600 dark:text-slate-400 mb-2 tracking-wide uppercase text-xs">Notas Adicionales</IonLabel>
                 <IonTextarea 
                   rows={3} 
                   placeholder="Describe la situación brevemente..."
                   value={description}
                   onIonChange={e => setDescription(e.detail.value!)}
-                  className="text-white bg-black/20 rounded-xl p-2 mt-2"
+                  className="text-slate-900 dark:text-white bg-slate-100 dark:bg-black/20 rounded-xl p-2 mt-2"
                 />
               </IonItem>
             </div>
